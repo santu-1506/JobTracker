@@ -16,5 +16,11 @@
   "engines": {
     "node": ">=22"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "prettier": "^3.9.10",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.7"
+  }
 }
