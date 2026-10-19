@@ -37,7 +37,9 @@ export const sightingSchema = z.object({
 const uuidParams = z.object({ id: z.string().uuid() });
 
 export async function sightingRoutes(app: FastifyInstance): Promise<void> {
-  app.post('/v1/sightings', { preHandler: requireUser }, async (request): Promise<BadgeResponse> => {
+  const sightingLimit = { rateLimit: { max: app.config.sightingsPerMinute, timeWindow: '1 minute' } };
+
+  app.post('/v1/sightings', { preHandler: requireUser, config: sightingLimit }, async (request): Promise<BadgeResponse> => {
     const input = parseInput(sightingSchema, request.body);
     const { badge } = await ingestSighting(app.db, request.user!.id, input);
     return badge;

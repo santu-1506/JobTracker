@@ -8,7 +8,13 @@ export async function installRoutes(app: FastifyInstance): Promise<void> {
    * Called once by the extension after install. Returns a bearer token that
    * identifies this browser; the server keeps only its hash.
    */
-  app.post('/v1/installs', async (_request, reply) => {
+  // Tight per-IP budget: minting many identities is how someone would try
+  // to poison the shared history.
+  const installLimit = {
+    rateLimit: { max: app.config.installsPerHour, timeWindow: '1 hour', keyGenerator: (r: { ip: string }) => `ip:${r.ip}` },
+  };
+
+  app.post('/v1/installs', { config: installLimit }, async (_request, reply) => {
     const token = generateToken();
     const { rows } = await app.db.query<{ id: string; plan: 'free' | 'pro' }>(
       'INSERT INTO users (token_hash, plan) VALUES ($1, $2) RETURNING id, plan',

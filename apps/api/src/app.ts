@@ -3,6 +3,7 @@ import Fastify, { type FastifyError, type FastifyInstance } from 'fastify';
 import type { Config } from './config.js';
 import type { Pool } from './db/pool.js';
 import { HttpError } from './errors.js';
+import { registerRateLimits } from './plugins/rate-limit.js';
 import { analyticsRoutes } from './routes/analytics.js';
 import { applicationRoutes } from './routes/applications.js';
 import { healthRoutes } from './routes/health.js';
@@ -56,6 +57,9 @@ export async function buildApp({ config, pool }: AppDependencies): Promise<Fasti
     const body: ApiErrorBody = { error: { code: 'not_found', message: `No route for ${request.method} ${request.url}` } };
     return reply.code(404).send(body);
   });
+
+  // Must be registered before the routes so its onRoute hook sees them.
+  await registerRateLimits(app);
 
   await app.register(healthRoutes);
   await app.register(installRoutes);

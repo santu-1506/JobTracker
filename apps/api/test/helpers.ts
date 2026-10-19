@@ -15,6 +15,7 @@ export const testConfig: Config = {
   defaultPlan: 'free',
   workerEnabled: false,
   sightingsPerMinute: 10_000,
+  installsPerHour: 10_000,
   trustProxy: false,
 };
 

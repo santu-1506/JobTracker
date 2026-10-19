@@ -15,6 +15,7 @@ const envSchema = z.object({
   DEFAULT_PLAN: z.enum(['free', 'pro']).default('free'),
   WORKER_ENABLED: boolFromString.default('false'),
   SIGHTINGS_PER_MINUTE: z.coerce.number().int().positive().default(120),
+  INSTALLS_PER_HOUR: z.coerce.number().int().positive().default(20),
   TRUST_PROXY: boolFromString.default('false'),
 });
 
@@ -28,6 +29,7 @@ export interface Config {
   defaultPlan: 'free' | 'pro';
   workerEnabled: boolean;
   sightingsPerMinute: number;
+  installsPerHour: number;
   trustProxy: boolean;
 }
 
@@ -52,6 +54,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     defaultPlan: e.DEFAULT_PLAN,
     workerEnabled: e.WORKER_ENABLED,
     sightingsPerMinute: e.SIGHTINGS_PER_MINUTE,
+    installsPerHour: e.INSTALLS_PER_HOUR,
     trustProxy: e.TRUST_PROXY,
   };
 }
