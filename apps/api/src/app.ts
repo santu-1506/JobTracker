@@ -6,6 +6,7 @@ import { HttpError } from './errors.js';
 import { applicationRoutes } from './routes/applications.js';
 import { healthRoutes } from './routes/health.js';
 import { installRoutes } from './routes/installs.js';
+import { reminderRoutes } from './routes/reminders.js';
 import { sightingRoutes } from './routes/sightings.js';
 
 declare module 'fastify' {
@@ -59,6 +60,7 @@ export async function buildApp({ config, pool }: AppDependencies): Promise<Fasti
   await app.register(installRoutes);
   await app.register(sightingRoutes);
   await app.register(applicationRoutes);
+  await app.register(reminderRoutes);
 
   return app;
 }

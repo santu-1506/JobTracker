@@ -12,12 +12,15 @@
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run",
     "db:migrate": "tsx --conditions=source src/db/migrate-cli.ts",
-    "db:migrate:prod": "node dist/db/migrate-cli.js"
+    "db:migrate:prod": "node dist/db/migrate-cli.js",
+    "worker": "tsx watch --conditions=source src/worker.ts",
+    "start:worker": "node dist/worker.js"
   },
   "dependencies": {
     "@jobtracker/core": "0.1.0",
     "fastify": "^5.12.7",
     "pg": "^8.23.1",
+    "pino": "^10.4.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {
