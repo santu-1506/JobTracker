@@ -14,7 +14,8 @@
     "db:migrate": "tsx --conditions=source src/db/migrate-cli.ts",
     "db:migrate:prod": "node dist/db/migrate-cli.js",
     "worker": "tsx watch --conditions=source src/worker.ts",
-    "start:worker": "node dist/worker.js"
+    "start:worker": "node dist/worker.js",
+    "plan:set": "tsx --conditions=source src/scripts/set-plan.ts"
   },
   "dependencies": {
     "@fastify/rate-limit": "^10.3.0",
