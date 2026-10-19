@@ -10,7 +10,9 @@
     "start": "node dist/server.js",
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json",
-    "test": "vitest run"
+    "test": "vitest run",
+    "db:migrate": "tsx --conditions=source src/db/migrate-cli.ts",
+    "db:migrate:prod": "node dist/db/migrate-cli.js"
   },
   "dependencies": {
     "@jobtracker/core": "0.1.0",
