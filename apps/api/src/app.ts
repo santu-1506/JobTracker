@@ -4,6 +4,7 @@ import type { Config } from './config.js';
 import type { Pool } from './db/pool.js';
 import { HttpError } from './errors.js';
 import { healthRoutes } from './routes/health.js';
+import { installRoutes } from './routes/installs.js';
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -29,6 +30,7 @@ export async function buildApp({ config, pool }: AppDependencies): Promise<Fasti
 
   app.decorate('db', pool);
   app.decorate('config', config);
+  app.decorateRequest('user', null);
 
   app.setErrorHandler((error: FastifyError | HttpError, request, reply) => {
     if (error instanceof HttpError) {
@@ -52,6 +54,7 @@ export async function buildApp({ config, pool }: AppDependencies): Promise<Fasti
   });
 
   await app.register(healthRoutes);
+  await app.register(installRoutes);
 
   return app;
 }
