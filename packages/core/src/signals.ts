@@ -132,6 +132,9 @@ const EVERGREEN_PATTERNS: Array<[RegExp, string]> = [
   [/(?:build|building) (?:a|our) pipeline/i, 'building a pipeline'],
 ];
 
+/** Every label detectEvergreenLanguage can return; the API rejects anything else. */
+export const EVERGREEN_LABELS: readonly string[] = [...new Set(EVERGREEN_PATTERNS.map(([, label]) => label))];
+
 export function detectEvergreenLanguage(text: string | null | undefined): string[] {
   if (!text) return [];
   const found = new Set<string>();

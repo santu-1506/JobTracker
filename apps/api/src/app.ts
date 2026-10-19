@@ -5,6 +5,7 @@ import type { Pool } from './db/pool.js';
 import { HttpError } from './errors.js';
 import { healthRoutes } from './routes/health.js';
 import { installRoutes } from './routes/installs.js';
+import { sightingRoutes } from './routes/sightings.js';
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -55,6 +56,7 @@ export async function buildApp({ config, pool }: AppDependencies): Promise<Fasti
 
   await app.register(healthRoutes);
   await app.register(installRoutes);
+  await app.register(sightingRoutes);
 
   return app;
 }
