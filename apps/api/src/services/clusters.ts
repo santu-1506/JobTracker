@@ -65,8 +65,8 @@ export function clusterFingerprint(row: Pick<ClusterRow, 'id' | 'company_key' | 
 
 export async function saveAssessment(db: Queryable, clusterId: string, assessment: GhostAssessment): Promise<void> {
   await db.query(
-    'UPDATE job_clusters SET ghost_score = $2, ghost_level = $3, scored_at = now() WHERE id = $1',
-    [clusterId, assessment.score, assessment.level],
+    'UPDATE job_clusters SET ghost_score = $2, ghost_level = $3, ghost_label = $4, scored_at = now() WHERE id = $1',
+    [clusterId, assessment.score, assessment.level, assessment.label],
   );
 }
 

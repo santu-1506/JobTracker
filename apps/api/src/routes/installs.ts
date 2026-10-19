@@ -1,6 +1,7 @@
 import { PLAN_LIMITS, type InstallResponse, type MeResponse } from '@jobtracker/core';
 import type { FastifyInstance } from 'fastify';
 import { generateToken, hashToken, requireUser } from '../plugins/auth.js';
+import { countApplications } from '../services/applications.js';
 
 export async function installRoutes(app: FastifyInstance): Promise<void> {
   /**
@@ -24,7 +25,7 @@ export async function installRoutes(app: FastifyInstance): Promise<void> {
       userId: user.id,
       plan: user.plan,
       limits: PLAN_LIMITS[user.plan],
-      usage: { applications: 0 },
+      usage: { applications: await countApplications(app.db, user.id) },
     };
   });
 }

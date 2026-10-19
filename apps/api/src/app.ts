@@ -3,6 +3,7 @@ import Fastify, { type FastifyError, type FastifyInstance } from 'fastify';
 import type { Config } from './config.js';
 import type { Pool } from './db/pool.js';
 import { HttpError } from './errors.js';
+import { applicationRoutes } from './routes/applications.js';
 import { healthRoutes } from './routes/health.js';
 import { installRoutes } from './routes/installs.js';
 import { sightingRoutes } from './routes/sightings.js';
@@ -57,6 +58,7 @@ export async function buildApp({ config, pool }: AppDependencies): Promise<Fasti
   await app.register(healthRoutes);
   await app.register(installRoutes);
   await app.register(sightingRoutes);
+  await app.register(applicationRoutes);
 
   return app;
 }

@@ -79,6 +79,16 @@ export interface Application {
   ghost: GhostSummary | null;
 }
 
+export interface ApplicationEvent {
+  fromStage: ApplicationStage | null;
+  toStage: ApplicationStage;
+  at: string;
+}
+
+export interface ApplicationDetail extends Application {
+  events: ApplicationEvent[];
+}
+
 export interface CreateApplicationInput {
   postingId?: string;
   company?: string;

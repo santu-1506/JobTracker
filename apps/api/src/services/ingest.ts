@@ -9,6 +9,7 @@ import {
 } from '@jobtracker/core';
 import { withTransaction, type Pool, type PoolClient } from '../db/pool.js';
 import { badRequest } from '../errors.js';
+import { getApplicationForCluster } from './applications.js';
 import {
   CLUSTER_COLUMNS,
   assessCluster,
@@ -217,7 +218,7 @@ export async function ingestSighting(
       firstSeenAt: clusterRow.first_seen_at.toISOString(),
       sources: await clusterSources(client, clusterRow.id),
       viewerCount: clusterRow.viewer_count,
-      application: null,
+      application: await getApplicationForCluster(client, userId, clusterRow.id),
     };
     return { badge, clusterRow, postingCreated, clusterCreated };
   });
